@@ -31,7 +31,7 @@ const downloadCV = () => {
             <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="social-icon" title="LinkedIn">
               💼
             </a>
-            <a href="https://mail.google.com/mail/u/0/#inbox" class="social-icon" title="Email">
+            <a href="mailto:yzagaffud03@gmail.com" class="social-icon" title="Email">
               ✉️
             </a>
             <a href="https://www.facebook.com/ryzamae.gaffud" target="_blank" rel="noopener noreferrer" class="social-icon" title="Facebook">
