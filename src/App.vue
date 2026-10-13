@@ -5,6 +5,7 @@ import About from "./components/About.vue"
 import Skills from "./components/Skills.vue"
 import Projects from "./components/Projects.vue"
 import Contact from "./components/Contact.vue"
+import Footer from "./components/Footer.vue"
 </script>
 
 <template>
@@ -23,10 +24,13 @@ import Contact from "./components/Contact.vue"
     <!-- Foreground Content Layer -->
     <main class="content-layer">
       <Home />
-      <About />
-      <Skills />
-      <Projects />
-      <Contact />
+      <div v-reveal><About id="about" /></div>
+      <div v-reveal><Skills id="skills" /></div>
+      <div v-reveal><Projects id="projects" /></div>
+      <div v-reveal><Contact id="contact" /></div>
+      
+      <!-- Footer na may sariling v-reveal -->
+      <div v-reveal><Footer id="footer" /></div>
     </main>
   </div>
 </template>
@@ -41,8 +45,6 @@ import Contact from "./components/Contact.vue"
 
 html {
   scroll-behavior: smooth;
-  /* Hinahawakan ang scroll para sakto sa bawat section ang hinto */
-  scroll-snap-type: y mandatory;
 }
 
 body {
@@ -51,7 +53,7 @@ body {
   overflow-x: hidden;
 }
 
-/* Video Container - Permanent behind everything */
+/* Video Container */
 .video-container {
   position: fixed;
   top: 0;
@@ -82,18 +84,28 @@ body {
   z-index: 10;
 }
 
-/* Siguradong buong screen bawat section at hiwalay ang kasunod */
+/* Bawat section ay eksaktong 100vh para masolo ng Contact ang viewport */
 section {
   min-height: 100vh;
   padding: 100px 10% 60px 10%;
   background: transparent !important;
   box-sizing: border-box;
-  
-  /* Hihinto ang scroll nang sakto sa itaas ng bawat section */
-  scroll-snap-align: start;
-  
   display: flex;
   flex-direction: column;
   justify-content: center;
+}
+
+/* SMOOTH SCROLL REVEAL ANIMATIONS */
+.reveal-init {
+  opacity: 0;
+  transform: translateY(60px);
+  transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), 
+              transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+  will-change: opacity, transform;
+}
+
+.reveal-visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 </style>

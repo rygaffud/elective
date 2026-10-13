@@ -1,304 +1,368 @@
-<script setup lang="ts">
-import { ref } from 'vue';
-
-const isSubmitted = ref(false);
-
-const handleSubmit = () => {
-  isSubmitted.value = true;
-  setTimeout(() => {
-    isSubmitted.value = false;
-  }, 4000);
-};
-</script>
-
 <template>
-  <section id="contact">
-    <h2>Get In Touch</h2>
+  <section id="contact" class="contact-section">
+    <div class="contact-container">
+      
+      <!-- Section Title -->
+      <h2 class="section-title">
+        Contact <span class="highlight">Me</span>
+      </h2>
 
-    <div class="contact-grid">
-      <!-- 1. Left Card: Direct Details & Status -->
-      <div class="info-card">
-        <h3>Let's Work Together</h3>
-        <p class="intro-text">
-          I am currently open to freelance opportunities, technical collaborations, or full-time roles in software and hardware engineering.
-        </p>
-
-        <div class="info-items">
-          <div class="info-item">
-            <span class="info-icon">📍</span>
-            <div>
-              <span class="label">Location</span>
-              <p class="value">Cagayan Valley, Philippines</p>
-            </div>
+      <!-- Main Two-Column Layout -->
+      <div class="contact-grid">
+        
+        <!-- Left Column: Contact Form -->
+        <form @submit.prevent="handleSubmit" class="contact-form">
+          <div class="input-group">
+            <input 
+              type="text" 
+              v-model="form.name" 
+              placeholder="Name" 
+              required 
+              class="pill-input"
+            />
           </div>
 
-          <div class="info-item">
-            <span class="info-icon">✉️</span>
-            <div>
-              <span class="label">Email</span>
-              <p class="value">yzagaffud03@gmail.com</p>
-            </div>
+          <div class="input-group">
+            <input 
+              type="email" 
+              v-model="form.email" 
+              placeholder="Email" 
+              required 
+              class="pill-input"
+            />
           </div>
 
-          <div class="info-item">
-            <span class="info-icon">💼</span>
-            <div>
-              <span class="label">Status</span>
-              <p class="value badge">Available for Projects</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 2. Right Card: Message Form -->
-      <div class="form-card">
-        <h3>Send a Direct Message</h3>
-
-        <form @submit.prevent="handleSubmit">
-          <div class="form-group">
-            <input type="text" placeholder="Your Name" required />
+          <div class="input-group">
+            <textarea 
+              v-model="form.message" 
+              placeholder="Message" 
+              rows="5" 
+              required 
+              class="pill-textarea"
+            ></textarea>
           </div>
 
-          <div class="form-group">
-            <input type="email" placeholder="Your Email Address" required />
-          </div>
-
-          <div class="form-group">
-            <textarea placeholder="Your Message or Project Idea..." rows="4" required></textarea>
-          </div>
-
-          <button type="submit" class="btn-send">
-            {{ isSubmitted ? 'Message Sent! ✨' : 'Send Message 🚀' }}
+          <button type="submit" class="send-btn" :disabled="isSubmitting">
+            <span>{{ isSubmitting ? 'Sending...' : 'Send Message' }}</span>
+            <i class='bx bx-right-arrow-alt arrow-icon'></i>
           </button>
         </form>
+
+        <!-- Right Column: Info Cards -->
+        <div class="contact-info-list">
+          
+          <a href="mailto:yzagaffud03@gmail.com" class="info-card">
+            <div class="card-left">
+              <div class="icon-badge">
+                <i class='bx bx-envelope'></i>
+              </div>
+              <div class="info-text">
+                <span class="info-label">Email</span>
+                <span class="info-val">yzagaffud03@gmail.com</span>
+              </div>
+            </div>
+            <div class="arrow-badge">
+              <i class='bx bx-up-arrow-alt'></i>
+            </div>
+          </a>
+
+          <a href="tel:+639167243870" class="info-card">
+            <div class="card-left">
+              <div class="icon-badge">
+                <i class='bx bx-phone'></i>
+              </div>
+              <div class="info-text">
+                <span class="info-label">Phone number</span>
+                <span class="info-val">+63 916 724 3870</span>
+              </div>
+            </div>
+            <div class="arrow-badge">
+              <i class='bx bx-up-arrow-alt'></i>
+            </div>
+          </a>
+
+          <div class="info-card">
+            <div class="card-left">
+              <div class="icon-badge">
+                <i class='bx bx-map'></i>
+              </div>
+              <div class="info-text">
+                <span class="info-label">Location</span>
+                <span class="info-val">Tuguegarao City, Cagayan, Philippines</span>
+              </div>
+            </div>
+            <div class="arrow-badge">
+              <i class='bx bx-up-arrow-alt'></i>
+            </div>
+          </div>
+
+        </div>
+
       </div>
+
     </div>
   </section>
 </template>
 
+<script setup lang="ts">
+import { ref } from 'vue';
+
+const isSubmitting = ref(false);
+
+const form = ref({
+  name: '',
+  email: '',
+  message: ''
+});
+
+const handleSubmit = () => {
+  isSubmitting.value = true;
+  setTimeout(() => {
+    alert('Thank you! Your message has been sent successfully.');
+    form.value = { name: '', email: '', message: '' };
+    isSubmitting.value = false;
+  }, 1000);
+};
+</script>
+
 <style scoped>
-#contact {
+.contact-section {
   width: 100%;
-  padding: 40px 20px;
-  text-align: left;
+  min-height: 100vh;
+  padding: 100px 20px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   box-sizing: border-box;
 }
 
-h2 {
-  color: #fa47d9;
-  margin-bottom: 25px;
-  font-size: 2.25rem;
-  font-weight: bold;
-  text-align: left;
+.contact-container {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
 }
 
-/* Side-by-Side Responsive Grid Layout */
+.section-title {
+  color: #ffffff;
+  font-size: 3rem;
+  font-weight: 800;
+  text-align: center;
+  margin-bottom: 50px;
+  letter-spacing: -0.5px;
+}
+
+.section-title .highlight {
+  color: #fa47d9;
+  text-shadow: 0 0 15px rgba(250, 71, 217, 0.6);
+}
+
 .contact-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 24px;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 40px;
+  align-items: flex-start;
   width: 100%;
-  align-items: stretch;
 }
 
-/* Card Boxes with Glassmorphism Theme */
-.info-card,
-.form-card {
-  background: #432b3f69;
-  padding: 30px;
-  border-radius: 10px;
-  border: 1px solid rgba(250, 71, 217, 0.15);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  box-sizing: border-box;
-}
-
-h3 {
-  color: #fa47d9;
-  font-size: 1.3rem;
-  font-weight: bold;
-  margin-bottom: 12px;
-  text-align: left;
-  border-bottom: 1px solid rgba(250, 71, 217, 0.25);
-  padding-bottom: 10px;
-}
-
-.intro-text {
-  color: rgba(255, 255, 255, 0.9);
-  font-size: 0.95rem;
-  line-height: 1.6;
-  margin-bottom: 25px;
-}
-
-/* Info Items Styling */
-.info-items {
+.contact-form {
   display: flex;
   flex-direction: column;
   gap: 18px;
-}
-
-.info-item {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  background: rgba(255, 255, 255, 0.04);
-  padding: 12px 16px;
-  border-radius: 8px;
-  border: 1px solid rgba(250, 71, 217, 0.1);
-}
-
-.info-icon {
-  font-size: 1.4rem;
-}
-
-.label {
-  color: #fa47d9;
-  font-size: 0.75rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  display: block;
-}
-
-.value {
-  color: #ffffff;
-  font-size: 0.95rem;
-  font-weight: 500;
-  margin: 2px 0 0 0;
-}
-
-.value.badge {
-  color: #4ade80; /* Green badge status */
-}
-
-/* Form Controls */
-form {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  margin-top: 10px;
-}
-
-input,
-textarea {
   width: 100%;
-  padding: 14px;
+}
+
+.pill-input {
+  width: 100%;
+  padding: 18px 24px;
+  border-radius: 40px;
+  background: rgba(45, 25, 42, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(250, 71, 217, 0.2);
-  border-radius: 8px;
-  background: rgba(255, 255, 255, 0.05);
   color: #ffffff;
-  font-size: 0.95rem;
+  font-size: 0.98rem;
   outline: none;
   box-sizing: border-box;
   transition: all 0.3s ease;
 }
 
-input::placeholder,
-textarea::placeholder {
-  color: rgba(255, 255, 255, 0.6);
-}
-
-input:focus,
-textarea:focus {
-  border-color: #fa47d9;
-  background: rgba(250, 71, 217, 0.1);
-}
-
-.btn-send {
-  padding: 14px;
-  border: none;
-  border-radius: 8px;
-  background: #fa47d9;
+.pill-textarea {
+  width: 100%;
+  padding: 20px 24px;
+  border-radius: 28px;
+  background: rgba(45, 25, 42, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(250, 71, 217, 0.2);
   color: #ffffff;
-  font-weight: bold;
+  font-size: 0.98rem;
+  outline: none;
+  resize: vertical;
+  box-sizing: border-box;
+  font-family: inherit;
+  transition: all 0.3s ease;
+}
+
+.pill-input::placeholder,
+.pill-textarea::placeholder {
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.pill-input:focus,
+.pill-textarea:focus {
+  border-color: #fa47d9;
+  box-shadow: 0 0 20px rgba(250, 71, 217, 0.35);
+  background: rgba(60, 30, 55, 0.75);
+}
+
+.send-btn {
+  width: 100%;
+  padding: 16px 30px;
+  border-radius: 40px;
+  background: #fa47d9;
+  border: none;
+  color: #ffffff;
   font-size: 1rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
   cursor: pointer;
   transition: all 0.3s ease;
-  margin-top: 5px;
+  box-shadow: 0 0 22px rgba(250, 71, 217, 0.5);
 }
 
-.btn-send:hover {
+.send-btn:hover {
   background: #d633b5;
+  box-shadow: 0 0 32px rgba(250, 71, 217, 0.85);
   transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(250, 71, 217, 0.3);
 }
 
-/* ===================================================
-   RESPONSIVE MEDIA QUERIES (Mobile, Tablet, Desktop)
-   =================================================== */
+.send-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
 
-/* Tablets & Small Laptops (1024px pababa) */
-@media screen and (max-width: 1024px) {
+.arrow-icon {
+  font-size: 1.4rem;
+}
+
+.contact-info-list {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  width: 100%;
+}
+
+.info-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 24px;
+  border-radius: 40px;
+  background: rgba(45, 25, 42, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(250, 71, 217, 0.2);
+  text-decoration: none;
+  color: #ffffff;
+  transition: all 0.35s ease;
+  box-sizing: border-box;
+}
+
+.info-card:hover {
+  border-color: #fa47d9;
+  background: rgba(60, 30, 55, 0.8);
+  box-shadow: 0 10px 30px rgba(250, 71, 217, 0.3);
+  transform: translateY(-3px);
+}
+
+.card-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.icon-badge {
+  color: #fa47d9;
+  font-size: 1.35rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.info-text {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.info-label {
+  color: #fa47d9;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 2px;
+}
+
+.info-val {
+  color: #ffffff;
+  font-size: 0.95rem;
+  font-weight: 600;
+  word-break: break-word;
+}
+
+.arrow-badge {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: rgba(250, 71, 217, 0.15);
+  border: 1px solid rgba(250, 71, 217, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-size: 1.2rem;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+}
+
+.arrow-badge i {
+  transform: rotate(45deg);
+}
+
+.info-card:hover .arrow-badge {
+  background: #fa47d9;
+  color: #ffffff;
+  box-shadow: 0 0 12px rgba(250, 71, 217, 0.7);
+}
+
+@media (max-width: 880px) {
   .contact-grid {
-    gap: 20px;
-  }
-
-  .info-card,
-  .form-card {
-    padding: 25px;
+    grid-template-columns: 1fr;
+    gap: 30px;
   }
 }
 
-/* Mobile Devices (768px pababa) */
-@media screen and (max-width: 768px) {
-  #contact {
-    padding: 30px 15px;
+@media (max-width: 480px) {
+  .contact-section {
+    padding: 80px 15px 40px;
   }
 
-  h2 {
-    font-size: 1.85rem;
-    margin-bottom: 20px;
+  .section-title {
+    font-size: 2.2rem;
+    margin-bottom: 35px;
   }
 
-  .contact-grid {
-    grid-template-columns: 1fr; /* Single column view para sa mobile */
-    gap: 16px;
+  .info-card {
+    padding: 14px 18px;
+    border-radius: 30px;
   }
 
-  .info-card,
-  .form-card {
-    padding: 20px;
-  }
-
-  h3 {
-    font-size: 1.15rem;
-  }
-
-  .intro-text {
-    font-size: 0.9rem;
-    margin-bottom: 20px;
-  }
-
-  input,
-  textarea {
-    padding: 12px;
-    font-size: 0.9rem;
-  }
-
-  .btn-send {
-    padding: 12px;
-    font-size: 0.95rem;
-  }
-}
-
-/* Small Smartphones (380px pababa) */
-@media screen and (max-width: 380px) {
-  #contact {
-    padding: 20px 10px;
-  }
-
-  .info-card,
-  .form-card {
-    padding: 15px;
-  }
-
-  .info-item {
-    padding: 10px 12px;
-  }
-
-  .info-icon {
-    font-size: 1.2rem;
+  .info-val {
+    font-size: 0.85rem;
   }
 }
 </style>

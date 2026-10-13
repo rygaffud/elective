@@ -1,192 +1,374 @@
 <template>
-  <section id="about">
-    <h2>About Me!</h2>
-
-    <div class="main-layout">
-      <!-- 1. KALIWA: Larawan (Sukat mula sa image_10.png) -->
-      <div class="column-section image-card">
-        <img 
-          src="/about.jpg" 
-          alt="Ryza Mae Gaffud" 
-          class="profile-image"
-        />
-      </div>
-
-      <!-- 2. GITNA: About Me Paragraphs (Mas malawak pakanan) -->
-      <div class="column-section text-column flex-grow-col">
-        <div class="card">
-          <p>
-            I am a 4th Year Computer Engineering student. I enjoy creating websites, learning programming, and developing innovative technology solutions.
-          </p>
-        </div>
-
-        <div class="card">
-          <p>
-            My journey in tech spans both hardware concepts and software engineering, with a strong focus on modern web development.
-          </p>
-        </div>
-
-        <div class="card">
-          <p>
-            I am passionate about continuous learning, collaborating on tech projects, and crafting clean, user-friendly digital experiences.
-          </p>
+  <section id="about" class="about-section">
+    <div class="about-container">
+      
+      <!-- 1. KALIWA / TAAS: Centered Glowing Circular Profile Picture Container -->
+      <div class="about-image-wrapper" v-reveal="0">
+        <div class="glow-circle">
+          <img 
+            src="/about.jpg" 
+            alt="Ryza Mae Gaffud" 
+            class="profile-circle-img"
+          />
         </div>
       </div>
 
-      <!-- 3. KANAN: Educational Background (Mas malawak pakanan) -->
-      <div class="column-section text-column flex-grow-col">
-        <div class="card edu-single-box">
-          <h3 class="edu-heading">Educational Background</h3>
+      <!-- 2. KANAN / BABA: Title, Short Description & Read More Button -->
+      <div class="about-text-content" v-reveal="150">
+        <h2 class="about-title">
+          About <span class="highlight">Me</span>
+        </h2>
 
-          <div class="edu-item">
-            <span class="sub-title">College | 2023 – Present</span>
-            <h4>BS Computer Engineering</h4>
-            <p>Currently a 4th-year student focusing on software engineering, web development, and computer systems architecture.</p>
-          </div>
+        <p class="about-description">
+          A dedicated Computer Engineering student eager to apply technical expertise in programming, hardware system, and system design. Focused on building a strong foundation in engineering principles while embracing innovation and continuous growth. Dedicated to creating efficient, reliable, and forward-looking solutions that contribute to technological advancement and practical applications in everyday life.
+        </p>
 
-          <div class="edu-divider"></div>
-
-          <div class="edu-item">
-            <span class="sub-title">Senior High School | 2021 – 2023</span>
-            <h4>STEM Strand</h4>
-            <p>Graduated with honors, focusing on advanced mathematics, basic programming principles, and physical sciences.</p>
-          </div>
-
-          <div class="edu-divider"></div>
-
-          <div class="edu-item">
-            <span class="sub-title">Junior High School | 2017 – 2021</span>
-            <h4>Secondary Education</h4>
-            <p>Completed secondary education with active participation in computer literacy clubs and science fairs.</p>
-          </div>
-        </div>
+        <!-- Read More Button to Trigger Modal Popup -->
+        <button class="btn-read-more" @click="isModalOpen = true">
+          Read More
+        </button>
       </div>
+
     </div>
+
+    <!-- 3. MODAL POPUP OVERLAY (Lalabas kapag klining ang Read More) -->
+    <Transition name="modal-fade">
+      <div v-if="isModalOpen" class="modal-backdrop" @click.self="isModalOpen = false">
+        <div class="modal-card">
+          <!-- Close Modal Cross Button -->
+          <button class="close-btn" @click="isModalOpen = false" aria-label="Close modal">
+            <i class='bx bx-x'></i>
+          </button>
+
+          <h2 class="modal-title">More About <span class="highlight">Ryza</span></h2>
+
+          <div class="modal-grid">
+            <!-- Educational Background Section -->
+            <div class="modal-section">
+              <h3 class="modal-subtitle">Educational Background</h3>
+              
+              <div class="info-item">
+                <span class="sub-title">College | 2023 – Present</span>
+                <h4>BS Computer Engineering</h4>
+                <p>Currently a 4th-year student focusing on software engineering, web development, and computer systems architecture.</p>
+              </div>
+
+              <div class="modal-divider"></div>
+
+              <div class="info-item">
+                <span class="sub-title">Senior High School | 2021 – 2023</span>
+                <h4>STEM Strand</h4>
+                <p>Graduated with honors, focusing on advanced mathematics and physical sciences.</p>
+              </div>
+
+              <div class="modal-divider"></div>
+
+              <div class="info-item">
+                <span class="sub-title">Junior High School | 2017 – 2021</span>
+                <h4>Secondary Education</h4>
+                <p>Completed secondary education with active participation in school activities.</p>
+              </div>
+            </div>
+
+            <!-- Certifications & Seminars Section -->
+            <div class="modal-section">
+              <h3 class="modal-subtitle">Certifications & Seminars</h3>
+
+              <div class="info-item">
+                <span class="sub-title">Eligibilities & Certifications | March 9, 2026</span>
+                <h4>Civil Service Professional Level Passer</h4>
+                <p>Career Service Professional Eligibility</p>
+              </div>
+
+              <div class="modal-divider"></div>
+
+              <div class="info-item">
+                <span class="sub-title">Conference | December 12–13, 2025</span>
+                <h4>Frontiers of Computer Engineering: 2025 International Conference on New and Emerging Technologies</h4>
+                <p>International conference discussing emerging tech, hardware innovations, and modern engineering paradigms.</p>
+              </div>
+
+              <div class="modal-divider"></div>
+
+              <div class="info-item">
+                <span class="sub-title">Webinar | April 10, 2026</span>
+                <h4>Cybersecurity Webinar 2026</h4>
+                <p>Technical webinar focusing on cybersecurity fundamentals, threat landscapes, and system protection.</p>
+              </div>
+
+              <div class="modal-divider"></div>
+
+              <div class="info-item">
+                <span class="sub-title">Convention | July 20–22, 2026</span>
+                <h4>Regional Information Technology and Engineering (ITE) Convention 2026</h4>
+                <p>Regional convention featuring engineering advancements, tech trends, and professional networking.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Transition>
   </section>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { ref } from 'vue';
+
+// State to handle modal open/close
+const isModalOpen = ref(false);
+</script>
 
 <style scoped>
-#about {
+.about-section {
   width: 100%;
-  padding: 40px 40px;
+  min-height: 100vh;
+  padding: 100px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   box-sizing: border-box;
 }
 
-h2 {
-  color: #fa47d9;
-  margin-bottom: 25px;
-  font-size: 2.25rem;
-  font-weight: bold;
-  text-align: left;
-}
-
-/* Gagamit ng Flex para makontrol ang growth ng columns */
-.main-layout {
+.about-container {
   display: flex;
-  gap: 24px;
+  align-items: center;
+  justify-content: center;
+  gap: 70px;
   width: 100%;
-  align-items: stretch;
+  max-width: 1150px;
+  margin: 0 auto;
 }
 
-.column-section {
+/* Glowing Circle Profile Image Wrapper */
+.about-image-wrapper {
+  flex-shrink: 0;
   display: flex;
-  flex-direction: column;
-  gap: 16px;
-  height: 100%;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 380px;
+  margin: 0 auto;
 }
 
+.glow-circle {
+  width: 380px;
+  height: 380px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: radial-gradient(circle, rgba(250, 71, 217, 0.85) 0%, rgba(250, 71, 217, 0.2) 65%, transparent 100%);
+  border: 4px solid #fa47d9;
+  box-shadow: 0 0 50px rgba(250, 71, 217, 0.65), inset 0 0 20px rgba(250, 71, 217, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
 
+.glow-circle:hover {
+  transform: scale(1.03);
+  box-shadow: 0 0 75px rgba(250, 71, 217, 0.9), inset 0 0 30px rgba(250, 71, 217, 0.6);
+}
 
-.profile-image {
+.profile-circle-img {
   width: 100%;
   height: 100%;
-  max-height: 420px;
   object-fit: cover;
   object-position: top center;
-  border-radius: 8px;
+  border-radius: 50%;
 }
 
-/* 2 at 3. Text & Education Columns: Kusang lalapad pakanan upang punuin ang space */
-.flex-grow-col {
-  flex: 1 1 0%; /* Dynamic na lumalaki at pumapantay sa natitirang space */
-}
-
-/* Standard Glass Card Styling */
-.card {
-  background: #432b3f69;
-  padding: 25px;
-  text-align: left;
-  border-radius: 10px;
-  width: 100%;
+/* Text Content Area */
+.about-text-content {
   flex: 1;
-  box-sizing: border-box;
-  border: 1px solid rgba(250, 71, 217, 0.15);
+  text-align: left;
+  max-width: 580px;
 }
 
-.card p {
+.about-title {
   color: #ffffff;
-  margin: 0;
-  line-height: 1.6;
-  font-size: 0.95rem;
-  text-align: left;
+  font-size: 3.5rem;
+  font-weight: 800;
+  margin-bottom: 20px;
+  letter-spacing: -0.5px;
 }
 
-/* Education Box Styling */
-.edu-single-box {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: 100%;
-  text-align: left;
-}
-
-.edu-heading {
+.highlight {
   color: #fa47d9;
-  font-size: 1.3rem;
-  font-weight: bold;
-  margin-bottom: 15px;
-  text-align: left;
+  text-shadow: 0 0 15px rgba(250, 71, 217, 0.5);
 }
 
-.edu-item {
-  text-align: left;
+.about-description {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.98rem;
+  line-height: 1.65;
+  margin-bottom: 30px;
 }
 
-.edu-item h4 {
+/* Pill Read More Button */
+.btn-read-more {
+  padding: 12px 36px;
+  border-radius: 30px;
+  background: #fa47d9;
+  border: 2px solid #fa47d9;
   color: #ffffff;
-  font-size: 1.1rem;
-  font-weight: bold;
-  margin-bottom: 4px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 20px rgba(250, 71, 217, 0.5);
+}
+
+.btn-read-more:hover {
+  background: #d633b5;
+  border-color: #d633b5;
+  box-shadow: 0 0 30px rgba(250, 71, 217, 0.85);
+  transform: translateY(-2px);
+}
+
+/* ===================================================
+   POPUP MODAL STYLING
+   =================================================== */
+
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(10, 5, 15, 0.75);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.modal-card {
+  position: relative;
+  background: rgba(45, 25, 42, 0.92);
+  border: 1px solid rgba(250, 71, 217, 0.3);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+  border-radius: 24px;
+  padding: 35px;
+  width: 100%;
+  max-width: 880px;
+  max-height: 85vh;
+  overflow-y: auto;
   text-align: left;
+}
+
+.close-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: rgba(250, 71, 217, 0.15);
+  border: 1px solid rgba(250, 71, 217, 0.4);
+  color: #ffffff;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.close-btn:hover {
+  background: #fa47d9;
+  color: #ffffff;
+  transform: rotate(90deg);
+}
+
+.modal-title {
+  color: #ffffff;
+  font-size: 2.2rem;
+  font-weight: 800;
+  margin-bottom: 25px;
+}
+
+.modal-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px;
+}
+
+.modal-subtitle {
+  color: #fa47d9;
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 18px;
+  border-bottom: 1px solid rgba(250, 71, 217, 0.3);
+  padding-bottom: 8px;
+}
+
+.info-item h4 {
+  color: #ffffff;
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.info-item p {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.88rem;
+  line-height: 1.5;
+  margin: 0;
 }
 
 .sub-title {
   color: #fa47d9;
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   display: block;
   margin-bottom: 2px;
-  text-align: left;
 }
 
-.edu-divider {
+.modal-divider {
   height: 1px;
-  background-color: rgba(250, 71, 217, 0.25);
+  background: rgba(250, 71, 217, 0.2);
   margin: 12px 0;
-  width: 100%;
 }
 
-/* Responsive adjustment para sa mobile screens */
+/* Modal Transition Animations */
+.modal-fade-enter-active,
+.modal-fade-leave-active {
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+.modal-fade-enter-from,
+.modal-fade-leave-to {
+  opacity: 0;
+  transform: scale(0.95);
+}
+
+/* Responsive Media Queries */
 @media (max-width: 900px) {
-  .main-layout {
+  .about-container {
     flex-direction: column;
+    text-align: center;
+    gap: 40px;
   }
-  .image-card {
-    width: 100%; /* Sa mobile, kukuha na siya ng full width para responsive */
+
+  .about-text-content {
+    text-align: center;
+  }
+
+  .glow-circle {
+    width: 280px;
+    height: 280px;
+  }
+
+  .modal-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
   }
 }
 </style>

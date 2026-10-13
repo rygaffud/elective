@@ -1,68 +1,133 @@
 <script setup lang="ts">
-// Function para sa CV Download
+import { ref, onMounted, onUnmounted } from 'vue';
+
 const downloadCV = () => {
-  const cvUrl = '/Ryza_Gaffud_CV.pdf';
   const link = document.createElement('a');
-  link.href = cvUrl;
-  link.download = 'Ryza_Mae_Gaffud_CV.pdf';
+  link.href = '/CV-Ryza.pdf';
+  link.download = 'CV-Ryza.pdf';
+  document.body.appendChild(link);
   link.click();
+  document.body.removeChild(link);
 };
+
+// Typewriter Effect Logic
+const fullText = "Computer Engineer";
+const typedText = ref("");
+let charIndex = 0;
+let isDeleting = false;
+let timeoutId: number | undefined;
+
+const typeEffect = () => {
+  if (!isDeleting && charIndex <= fullText.length) {
+    typedText.value = fullText.substring(0, charIndex);
+    charIndex++;
+    if (charIndex > fullText.length) {
+      isDeleting = true;
+      timeoutId = window.setTimeout(typeEffect, 2000); // Hihinto muna ng 2 segundo bago burahin
+      return;
+    }
+  } else if (isDeleting && charIndex >= 0) {
+    typedText.value = fullText.substring(0, charIndex);
+    charIndex--;
+    if (charIndex < 0) {
+      isDeleting = false;
+      charIndex = 0;
+    }
+  }
+
+  const speed = isDeleting ? 60 : 120;
+  timeoutId = window.setTimeout(typeEffect, speed);
+};
+
+onMounted(() => {
+  typeEffect();
+});
+
+onUnmounted(() => {
+  if (timeoutId) clearTimeout(timeoutId);
+});
 </script>
 
 <template>
   <section id="home" class="home-section">
     <div class="home-content">
-      <!-- Left Column: Intro Text + Connect & Resume -->
+      
+      <!-- Left Column: Text Hierarchy, Social Links & Action Buttons -->
       <div class="text-box">
-        <span class="greeting">Hello, I'm</span>
-        <h1>Ryza Mae Gaffud</h1>
-        <h2>Computer Engineering Student</h2>
+        <!-- Main Large Heading -->
+        <h1 class="main-title">
+          Hi, It's <span class="highlight">Ryza</span>
+        </h1>
+
+        <!-- Sub Heading with Typewriter Effect -->
+        <h2 class="sub-title">
+          I'm a <span class="highlight typewriter-text">{{ typedText }}</span>
+        </h2>
         
+        <!-- Short Description Paragraph -->
         <p class="description">
-          Passionate about web development, IoT solutions, and continuous technical learning. Building clean, modern, and user-friendly digital experiences.
+          Passionate about web development, IoT solutions, and continuous technical learning. 
+          Building clean, modern, and user-friendly digital experiences.
         </p>
 
-        <!-- Social Media Links & Download CV -->
-        <div class="connect-container">
-          <div class="social-links">
-            <a href="https://github.com/rygaffud" target="_blank" rel="noopener noreferrer" class="social-icon" title="GitHub">
-              💻
-            </a>
-            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="social-icon" title="LinkedIn">
-              💼
-            </a>
-            <a href="mailto:yzagaffud03@gmail.com" class="social-icon" title="Email">
-              ✉️
-            </a>
-            <a href="https://www.facebook.com/ryzamae.gaffud" target="_blank" rel="noopener noreferrer" class="social-icon" title="Facebook">
-              🌐
-            </a>
-          </div>
+        <!-- Circular Social Media Icons -->
+        <div class="social-links">
+          <a href="https://github.com/rygaffud" target="_blank" rel="noopener noreferrer" class="social-icon" title="GitHub">
+            <i class='bx bxl-github'></i>
+          </a>
+          <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="social-icon" title="LinkedIn">
+            <i class='bx bxl-linkedin'></i>
+          </a>
+          <a href="mailto:yzagaffud03@gmail.com" class="social-icon" title="Email">
+            <i class='bx bx-envelope'></i>
+          </a>
+          <a href="https://www.facebook.com/ryzamae.gaffud" target="_blank" rel="noopener noreferrer" class="social-icon" title="Facebook">
+            <i class='bx bxl-facebook'></i>
+          </a>
+        </div>
 
-          <!-- Download CV Button -->
-          <button @click="downloadCV" class="btn-download-cv">
-            <span class="icon">📄</span>
-            <span>Download CV</span>
+        <!-- Action Pill Buttons -->
+        <div class="action-buttons">
+          <button @click="downloadCV" class="btn-solid">
+            Download CV
           </button>
+          <a href="#contact" class="btn-outline">
+            Contact
+          </a>
         </div>
       </div>
 
-      <!-- Right Column: Profile Picture -->
-      <div class="avatar-box">
-        <img src="/profile.jpg" alt="Ryza Mae Gaffud" />
+      <!-- Right Column: Interactive Highlight Photo Container -->
+      <div class="hero-image-container">
+        <div class="pink-glow-circle">
+          <img src="/profile.jpg" alt="Ryza Mae Gaffud" class="profile-photo" />
+        </div>
       </div>
+
     </div>
   </section>
 </template>
 
 <style scoped>
+/* Typewriter Cursor Indicator */
+.typewriter-text {
+  border-right: 2px solid #fa47d9;
+  padding-right: 4px;
+  animation: blinkCursor 0.8s infinite;
+}
+
+@keyframes blinkCursor {
+  0%, 100% { border-color: #fa47d9; }
+  50% { border-color: transparent; }
+}
+
 .home-section {
   display: flex;
   align-items: center;
   justify-content: center;
   min-height: 100vh;
   width: 100%;
-  padding: 100px 20px 40px;
+  padding: 100px 30px 40px;
   box-sizing: border-box;
 }
 
@@ -70,9 +135,9 @@ const downloadCV = () => {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 40px;
+  gap: 50px;
   width: 100%;
-  max-width: 1100px;
+  max-width: 1200px;
 }
 
 .text-box {
@@ -80,138 +145,206 @@ const downloadCV = () => {
   text-align: left;
 }
 
-.greeting {
+/* Main Title: "Hi, It's Ryza" */
+.main-title {
   color: #ffffff;
-  font-size: 1.1rem;
-  font-weight: 500;
-  display: block;
-  margin-bottom: 5px;
-}
-
-.text-box h1 {
-  color: #fa47d9;
-  font-size: 3rem;
+  font-size: 3.5rem;
   font-weight: 800;
-  line-height: 1.2;
-  margin-bottom: 5px;
+  line-height: 1.1;
+  margin-bottom: 8px;
 }
 
-.text-box h2 {
-  color: rgba(255, 255, 255, 0.9);
-  font-size: 1.5rem;
-  font-weight: 600;
-  margin-bottom: 15px;
+/* Sub Title: "I'm a Computer Engineer" */
+.sub-title {
+  color: #ffffff;
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 18px;
+}
+
+.highlight {
+  color: #fa47d9;
 }
 
 .description {
   color: rgba(255, 255, 255, 0.8);
-  font-size: 1rem;
+  font-size: 0.95rem;
   line-height: 1.6;
-  margin-bottom: 25px;
-  max-width: 550px;
+  margin-bottom: 28px;
+  max-width: 500px;
 }
 
-/* Connect & Resume Actions */
-.connect-container {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  flex-wrap: wrap;
-}
-
+/* Social Media Circular Buttons */
 .social-links {
   display: flex;
-  gap: 12px;
+  gap: 14px;
+  margin-bottom: 28px;
 }
 
 .social-icon {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 44px;
-  height: 44px;
-  background: #432b3f69;
-  border: 1px solid rgba(250, 71, 217, 0.3);
+  width: 42px;
+  height: 42px;
   border-radius: 50%;
-  color: #ffffff;
+  border: 1px solid #fa47d9;
+  background: transparent;
+  color: #fa47d9;
   text-decoration: none;
-  font-size: 1.1rem;
+  font-size: 1.25rem;
   transition: all 0.3s ease;
 }
 
 .social-icon:hover {
-  border-color: #fa47d9;
   background: #fa47d9;
+  color: #ffffff;
+  box-shadow: 0 0 15px rgba(250, 71, 217, 0.7);
   transform: translateY(-3px);
 }
 
-.btn-download-cv {
-  display: inline-flex;
+/* Action Buttons (Solid Download CV vs Outline Contact) */
+.action-buttons {
+  display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 12px 22px;
-  border: 2px solid #fa47d9;
+  gap: 16px;
+}
+
+.btn-solid {
+  padding: 12px 32px;
   border-radius: 30px;
-  background: transparent;
-  color: #fa47d9;
-  font-weight: bold;
+  background: #fa47d9;
+  border: 2px solid #fa47d9;
+  color: #ffffff;
+  font-weight: 700;
   font-size: 0.95rem;
   cursor: pointer;
   transition: all 0.3s ease;
+  box-shadow: 0 0 18px rgba(250, 71, 217, 0.5);
 }
 
-.btn-download-cv:hover {
-  background: #fa47d9;
+.btn-solid:hover {
+  background: #d633b5;
+  border-color: #d633b5;
+  box-shadow: 0 0 28px rgba(250, 71, 217, 0.8);
+  transform: translateY(-2px);
+}
+
+.btn-outline {
+  padding: 12px 32px;
+  border-radius: 30px;
+  background: transparent;
+  border: 2px solid #fa47d9;
   color: #ffffff;
-  transform: translateY(-3px);
-  box-shadow: 0 4px 15px rgba(250, 71, 217, 0.4);
+  font-weight: 700;
+  font-size: 0.95rem;
+  text-decoration: none;
+  transition: all 0.3s ease;
 }
 
-/* Profile Picture Circle Box */
-.avatar-box {
-  width: 300px;
-  height: 300px;
+.btn-outline:hover {
+  background: rgba(250, 71, 217, 0.18);
+  transform: translateY(-2px);
+}
+
+/* Photo Container & Hover Highlight Effect */
+.hero-image-container {
+  flex-shrink: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.pink-glow-circle {
+  width: 420px;
+  height: 420px;
   border-radius: 50%;
   overflow: hidden;
-  border: 4px solid #fa47d9;
-  box-shadow: 0 0 25px rgba(250, 71, 217, 0.4);
-  flex-shrink: 0;
+  background: radial-gradient(circle, rgba(250, 71, 217, 0.85) 0%, rgba(250, 71, 217, 0.25) 60%, transparent 100%);
+  border: 3px solid rgba(250, 71, 217, 0.5);
+  box-shadow: 0 0 35px rgba(250, 71, 217, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-.avatar-box img {
+.profile-photo {
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: top center;
+  border-radius: 50%;
+  transition: transform 0.4s ease;
 }
 
-/* Mobile Responsiveness */
-@media (max-width: 850px) {
+/* HOVER HIGHLIGHT DESIGN: Kapag tinapat ang cursor sa larawan */
+.pink-glow-circle:hover {
+  border-color: #fa47d9;
+  box-shadow: 0 0 70px rgba(250, 71, 217, 0.95), inset 0 0 30px rgba(250, 71, 217, 0.6);
+  transform: scale(1.03);
+}
+
+.pink-glow-circle:hover .profile-photo {
+  transform: scale(1.05);
+}
+
+/* Responsive Layout */
+@media (max-width: 992px) {
   .home-content {
     flex-direction: column-reverse;
     text-align: center;
-    gap: 30px;
+    gap: 40px;
   }
 
   .text-box {
     text-align: center;
   }
 
-  .text-box h1 {
-    font-size: 2.2rem;
+  .main-title {
+    font-size: 2.6rem;
   }
 
-  .text-box h2 {
-    font-size: 1.2rem;
+  .sub-title {
+    font-size: 1.4rem;
   }
 
-  .connect-container {
+  .description {
+    margin: 0 auto 25px auto;
+  }
+
+  .social-links,
+  .action-buttons {
     justify-content: center;
   }
 
-  .avatar-box {
-    width: 220px;
-    height: 220px;
+  .pink-glow-circle {
+    width: 300px;
+    height: 300px;
+  }
+}
+
+@media (max-width: 480px) {
+  .main-title {
+    font-size: 2.2rem;
+  }
+
+  .pink-glow-circle {
+    width: 240px;
+    height: 240px;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .btn-solid,
+  .btn-outline {
+    width: 100%;
+    text-align: center;
+    box-sizing: border-box;
   }
 }
 </style>

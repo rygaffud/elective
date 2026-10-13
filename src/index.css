@@ -1,1 +1,20 @@
 @import "tailwindcss";
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Initial state ng mga sections bago mai-scroll */
+.reveal-init {
+  opacity: 0;
+  transform: translateY(140px) scale(0.95);
+  transition: opacity 0.95s cubic-bezier(0.22, 1, 0.36, 1), 
+              transform 0.95s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+
+/* Active state kapag na-scroll papunta sa section */
+.reveal-visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
